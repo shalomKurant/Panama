@@ -1,0 +1,6 @@
+RUN 
+yarn install_all
+yarn build_all
+yarn start
+
+Go to http://localhost:5000
