@@ -1,0 +1,25 @@
+.basic-box-option {
+    // width: 100%;
+    // height: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    // border: solid 1px;
+    // border-radius: 10px;
+    .box-header {
+        // width: 100%;
+        // height: 20%;
+        // background-color: aqua;
+        // font-family: sans-serif;
+        // border-radius: inherit;
+        .title {
+            font-size: 30px;
+        }
+    
+    }
+    .box-option-content {
+        width: 100%;
+        height: 79%;
+    }
+}

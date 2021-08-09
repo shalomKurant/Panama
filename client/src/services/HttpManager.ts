@@ -1,8 +1,10 @@
-export default class HttpManager {
+import { baseUrl } from "../constants/constants";
+
+class HttpManager {
     constructor() {}
 
-    public async get(): Promise<any> {
-        const response = await fetch("url", {
+    public async get(url: string): Promise<any> {
+        const response = await fetch(baseUrl + url, {
             headers: {
                 "Content-type": "application/json"
             },
@@ -11,15 +13,18 @@ export default class HttpManager {
         return await response.json();
     }
 
-    public async post(): Promise<any> {
-        const response = await fetch('https://httpbin.org/post', {
+    public async post(url: string, body: any): Promise<any> {
+        const response = await fetch(baseUrl + url, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({a: 1, b: 'Textual content'})
+            body: JSON.stringify(body)
           });
           return await response.json();
     }
 }
+
+const httpManager = new HttpManager();
+export {httpManager}

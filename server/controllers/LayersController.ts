@@ -2,7 +2,7 @@ import * as express from 'express';
 import IController from '../interfaces/IController';
  
 export class LayersController implements IController {
-  public path = '/layers';
+  public path = '/addLayerDescription';
   public router = express.Router();
  
   private layers: any[] = [
@@ -27,6 +27,7 @@ export class LayersController implements IController {
  
   createAPost = (request: express.Request, response: express.Response) => {
     const post: any = request.body;
+    console.log(post);
     this.layers.push(post);
     response.send(post);
   }
