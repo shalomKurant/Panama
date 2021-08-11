@@ -14,7 +14,7 @@ export default class BaseController {
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
   }
- 
+
   private initializeMiddlewares() {
     this.app.use(bodyParser.json());
     this.app.use(express.static(path.join(__dirname, '../../../client/build')));

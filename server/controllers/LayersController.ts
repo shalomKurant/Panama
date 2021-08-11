@@ -1,5 +1,6 @@
 import * as express from 'express';
 import IController from '../interfaces/IController';
+import { dataBaseConnector } from '../services/DataBaseConnector';
  
 export class LayersController implements IController {
   public path = '/addLayerDescription';
@@ -27,6 +28,7 @@ export class LayersController implements IController {
  
   createAPost = (request: express.Request, response: express.Response) => {
     const post: any = request.body;
+    const connector = dataBaseConnector
     console.log(post);
     this.layers.push(post);
     response.send(post);

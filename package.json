@@ -14,8 +14,10 @@
     "build_client": "cd client && yarn build"
   },
   "dependencies": {
+    "@types/mongodb": "^4.0.7",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "mongodb": "^4.1.0",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5",
     "yarn": "^1.22.11"
