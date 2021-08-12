@@ -1,4 +1,9 @@
 const MongoClient = require('mongodb').MongoClient;
+import mongodb from "mongodb";
+export interface IDataBaseConnector {
+  get(query: any): Promise<void>;
+  insert(object: any): Promise<void>;
+} 
 
 class DataBaseConnector {
   private client: any;
@@ -23,17 +28,17 @@ class DataBaseConnector {
       }
     }
 
-    public async get(): Promise<void> {
-      const items = await this.collection.find({}).toArray();
-      console.log(items);
-      
-      const myobj = { name: "Company Inc", address: "Highway 37" };
-      await this.collection.insertOne(myobj);
+    public async get(query: any): Promise<void> {
+      const items = await this.collection.find(query).toArray();
+      return items;
     }
 
-    public async insert(): Promise<void> {
-      const myobj = { name: "Company Inc", address: "Highway 37" };
-      await this.collection.insertOne(myobj);
+    public async insert(object: any): Promise<void> {
+      await this.collection.insertOne(object);
+    }
+
+    public async delete(query: any): Promise<void> {
+      await this.collection.deleteOne(query);
     }
 
     public close() {

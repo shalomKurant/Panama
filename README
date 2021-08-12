@@ -1,6 +1,6 @@
 RUN 
 yarn install_all
 yarn build_all
-yarn start
+yarn start / yarn debug
 
 Go to http://localhost:5000

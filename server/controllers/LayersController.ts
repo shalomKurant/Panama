@@ -1,19 +1,14 @@
 import * as express from 'express';
 import IController from '../interfaces/IController';
-import { dataBaseConnector } from '../services/DataBaseConnector';
+import { dataBaseConnector, IDataBaseConnector } from '../services/DataBaseConnector';
  
 export class LayersController implements IController {
   public path = '/addLayerDescription';
   public router = express.Router();
- 
-  private layers: any[] = [
-    {
-      id: "ID_LAYER",
-      description: "DESCRIPTION_LAYER"
-    }
-  ];
+  private readonly DBconnector: IDataBaseConnector;
  
   constructor() {
+    this.DBconnector = dataBaseConnector;
     this.intializeRoutes();
   }
  
@@ -22,15 +17,32 @@ export class LayersController implements IController {
     this.router.post(this.path, this.createAPost);
   }
  
-  getAllPosts = (request: express.Request, response: express.Response) => {
-    response.send(this.layers);
+  private getAllPosts = async (request: express.Request, response: express.Response) => {
+    try {
+      const items = await this.DBconnector.get({});
+      response.status(200).send(items);
+    } catch (error) {
+      response.status(400).send(error);
+    }
   }
  
-  createAPost = (request: express.Request, response: express.Response) => {
-    const post: any = request.body;
-    const connector = dataBaseConnector
-    console.log(post);
-    this.layers.push(post);
-    response.send(post);
+  private createAPost = async (request: express.Request, response: express.Response) => {
+    const layer: any = request.body;
+    try {
+      await this.DBconnector.insert(layer);
+      response.status(200).send(layer);
+    } catch (error) {
+      response.status(400).send(error);
+    }
+  }
+
+  private createAPost = async (request: express.Request, response: express.Response) => {
+    const layer: any = request.body;
+    try {
+      await this.DBconnector.insert(layer);
+      response.status(200).send(layer);
+    } catch (error) {
+      response.status(400).send(error);
+    }
   }
 }
