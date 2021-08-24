@@ -1,5 +1,6 @@
 // "وصف"
 import * as React from "react";
+import { siteState, siteTypes } from "../..";
 import "./Header.style.scss";
 
 class Header extends React.Component {
@@ -14,9 +15,13 @@ class Header extends React.Component {
     render() {
         return (
             <div id="header-container">
-                <span id="title">desciption</span> 
+                <span id="title" onClick={() => {this.changeState()}}>desciption</span> 
             </div>
         ) 
+    }
+
+    changeState() {
+        siteState = siteTypes.Game
     }
 
 }

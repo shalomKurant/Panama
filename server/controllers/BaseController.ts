@@ -1,3 +1,4 @@
+// TODO: split routes and controllers
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import IController from '../interfaces/IController';

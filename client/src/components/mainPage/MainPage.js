@@ -1,6 +1,7 @@
 import * as React from "react";
 import BaseContentOptions from "../baseContentOptions/BaseContentOptions";
 import AddLayer from "../addLayer/AddLayer.component";
+import DeleteLayer from "../deleteLayer/DeleteLayer.component";
 import Header from "../header/Header.component";
 import "./MainPage.style.scss";
 
@@ -38,8 +39,8 @@ class MainPage extends React.Component {
 
     getListOptions() {
         return [
-            {name: "addLayer1", title: "add new layer 1", icon: {}, component: <AddLayer onOptionClicked={this.onOptionClicked}/>, subTitle: "Click here"},
-            {name: "addLayer2", title: "add new layer 2", icon: {}, component: <div></div>, class: ""}
+            {name: "addLayer1", title: "add", icon: {}, component: <AddLayer onOptionClicked={this.onOptionClicked}/>, subTitle: "Click here"},
+            {name: "addLayer2", title: "delete ", icon: {}, component: <DeleteLayer onOptionClicked={this.onOptionClicked}/>, class: ""}
 
         ];
     } 

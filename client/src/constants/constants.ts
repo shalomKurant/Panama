@@ -5,15 +5,15 @@ export const constants = {
     },
     routes: {
         layers: {
-            getAll: "getAll",
-            getAllDescripion: "getAllLayersDescripion",
-            addDescription: "addLayerDescription",
-            editDescription: "editLayerDescription",
-            deleteDescription: "deleteLayerDescription",
-            getDescriptionById: "getLayerDescriptionById"
+            getAll: "layers/getAll",
+            getAllDescripion: "layers/getAllLayersDescripion",
+            addDescription: "layers/addLayerDescription",
+            editDescription: "layers/editLayerDescription",
+            deleteDescription: "layers/deleteLayerDescription/{0}",
+            getDescriptionById: "layers/getLayerDescriptionById/{0}"
         }
     }
 }
 
 const getUrl = window.location;
-export const baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+export const baseUrl: string = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];

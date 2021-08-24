@@ -24,6 +24,17 @@ class HttpManager {
           });
           return await response.json();
     }
+
+    public async delete(url: string): Promise<any> {
+        const response = await fetch(baseUrl + url, {
+            method: 'DELETE',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          });
+          return await response.json();
+    }
 }
 
 const httpManager = new HttpManager();

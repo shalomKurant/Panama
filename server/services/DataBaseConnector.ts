@@ -1,11 +1,15 @@
+import { ILayer } from "../../client/common/interfaces/ILayer";
+
 const MongoClient = require('mongodb').MongoClient;
-import mongodb from "mongodb";
+
 export interface IDataBaseConnector {
-  get(query: any): Promise<void>;
+  get(query: any): Promise<ILayer[]>;
   insert(object: any): Promise<void>;
+  delete(query: any): Promise<void>;
+  update(findQuery: any, newValue: any): Promise<void>;
 } 
 
-class DataBaseConnector {
+class DataBaseConnector implements IDataBaseConnector {
   private client: any;
   private collection: any;
   private CONNECTION_URL = "mongodb://localhost:27017/";
@@ -28,9 +32,8 @@ class DataBaseConnector {
       }
     }
 
-    public async get(query: any): Promise<void> {
-      const items = await this.collection.find(query).toArray();
-      return items;
+    public async get(query: any): Promise<ILayer[]> {
+      return await this.collection.find(query).toArray();
     }
 
     public async insert(object: any): Promise<void> {
@@ -39,6 +42,10 @@ class DataBaseConnector {
 
     public async delete(query: any): Promise<void> {
       await this.collection.deleteOne(query);
+    }
+
+    public async update(findQuery: any, newValue: any): Promise<void> {
+      await this.collection.updateOne(findQuery, newValue);
     }
 
     public close() {

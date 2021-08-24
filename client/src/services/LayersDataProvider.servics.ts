@@ -14,15 +14,18 @@ class LayersDataProvider {
         return [
             {
                 displayName: "Layer 1",
-                id: "id 1"
+                id: "id 1",
+                description: "description"
             },
             {
                 displayName: "Layer 2",
-                id: "id 2"
+                id: "id 2",
+                description: "description"
             },
             {
                 displayName: "Layer 3",
-                id: "id 3"
+                id: "id 3",
+                description: "description"
             },
         ]
         const layers: ILayer[] = await httpManager.get(constants.routes.layers.getAll)
