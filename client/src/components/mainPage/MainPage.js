@@ -4,20 +4,33 @@ import AddLayer from "../addLayer/AddLayer.component";
 import DeleteLayer from "../deleteLayer/DeleteLayer.component";
 import Header from "../header/Header.component";
 import "./MainPage.style.scss";
+import BaseGameBoard from "../../memoryGame/components/baseGameBoard/BaseGameBoard.component";
 
 class MainPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
 
+        this.state = {
+            siteStateRegular: true
         }
+        this.changeState = this.changeState.bind(this);
+
+    }
+
+    changeState() {
+        this.setStateSite();
+    }
+
+    setStateSite() {
+        this.setState({siteStateRegular: !this.state.siteStateRegular})
     }
 
     render() {
         return (
             <div>
-                <Header/>
+                <Header changeState={this.changeState}/>
+                { this.state.siteStateRegular ?
                 <div id="base-option-container">
                     {
                         this.getListOptions().map(item => {
@@ -33,6 +46,7 @@ class MainPage extends React.Component {
                         })
                     }
                 </div>
+                : <BaseGameBoard></BaseGameBoard>}
             </div>
         ) 
     }

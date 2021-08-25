@@ -5,7 +5,6 @@ import "./Header.style.scss";
 
 class Header extends React.Component {
     constructor(props) {
-
         super(props);
         this.state = {
 
@@ -15,15 +14,10 @@ class Header extends React.Component {
     render() {
         return (
             <div id="header-container">
-                <span id="title" onClick={() => {this.changeState()}}>desciption</span> 
+                <span id="title" onClick={() => {this.props.changeState()}}>desciption</span> 
             </div>
         ) 
     }
-
-    changeState() {
-        siteState = siteTypes.Game
-    }
-
 }
 
 export default Header;
