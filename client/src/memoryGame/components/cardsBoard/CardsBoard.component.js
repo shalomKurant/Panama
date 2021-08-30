@@ -11,20 +11,37 @@ class CardsBoard extends React.Component {
         cards: [
           {
             id: Math.random(),
-            title: "title",
-            details: "details",
+            linkingId: "linkingId1",
+            title: "title1",
+            details: "details1",
             isShown: false
           },
           {
             id: Math.random(),
-            title: "title",
-            details: "details",
+            linkingId: "linkingId1",
+            title: "title1",
+            details: "details1",
+            isShown: false
+          },
+          {
+            id: Math.random(),
+            linkingId: "linkingId2",
+            title: "title2",
+            details: "details2",
+            isShown: false
+          },
+          {
+            id: Math.random(),
+            linkingId: "linkingId2",
+            title: "title2",
+            details: "details2",
             isShown: false
           }
         ]
     }
 
-    this.getGameState = this.getGameState.bind();
+    this.getGameState = this.getGameState.bind(this);
+    this.setGameState = this.setGameState.bind(this);
   }
 
   render() {
@@ -33,7 +50,7 @@ class CardsBoard extends React.Component {
           {
             this.state.cards.map(card => {
               return (
-                  <Card key={card.id} card={card} getGameState={this.getGameState}></Card>
+                  <Card key={card.id} card={card} getGameState={this.getGameState} setGameState={this.setGameState}></Card>
               ) 
             })
           }
@@ -46,6 +63,10 @@ class CardsBoard extends React.Component {
     const revealCards = this.getRevealCard();
     const getGameerId = "this"
     return revealCards;
+  }
+
+  setGameState(card) {
+    console.log(card);
   }
 
   getRevealCard() {
