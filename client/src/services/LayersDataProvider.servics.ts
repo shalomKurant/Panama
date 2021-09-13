@@ -3,19 +3,22 @@ import { httpManager } from "./HttpManager";
 import { ILayer } from "../../common/interfaces/ILayer";
 class LayersDataProvider {
     private allLayers: ILayer[] = [];
-    constructor() {}
-
-    public async getAllLayers(): Promise<ILayer[]> {
-        this.allLayers = await this.requestAllLayers();
-        return this.allLayers;
+    constructor() {
+        this.getAllLayers();
     }
 
-    private async requestAllLayers(): Promise<ILayer[]> {
+    public async getAllLayers(): Promise<ILayer[]> {
         return [
             {
                 displayName: "Layer 1",
                 id: "id 1",
-                description: "description"
+                description: "description description description description description description description description"
+                + "description description description description "
+                + "description description description description "
+                + "description description description description "
+                + "description description description description "
+                + "description description description description "
+
             },
             {
                 displayName: "Layer 2",
@@ -28,6 +31,11 @@ class LayersDataProvider {
                 description: "description"
             },
         ]
+        this.allLayers = await this.requestAllLayers();
+        return this.allLayers;
+    }
+
+    private async requestAllLayers(): Promise<ILayer[]> {
         const layers: ILayer[] = await httpManager.get(constants.routes.layers.getAll)
         return layers;
     }

@@ -25,7 +25,7 @@ export class LayersController implements IController {
     this.router.post(this.path + this.addLayerPath, this.createLayer);
     this.router.post(this.path + this.editLayerPath, this.editLayer);
     this.router.delete(this.path + this.deleteLayerPath, this.deleteLayer);
-    this.router.delete(this.path + this.getLayerByIdPath, this.getLayerById);
+    this.router.get(this.path + this.getLayerByIdPath, this.getLayerById);
   }
  
   private getAllLayers = async (request: express.Request, response: express.Response) => {
@@ -40,7 +40,9 @@ export class LayersController implements IController {
   private createLayer = async (request: express.Request, response: express.Response) => {
     const {layerId, displayName, description}: any = request.body;
     try {
-      await this.DBconnector.insert({layerId, displayName, description});
+      const searchQuery = { layerId };
+      const newValueQuery = { $set: {layerId, displayName, description} };
+      await this.DBconnector.update(searchQuery, newValueQuery);
       response.status(200).send({layerId, displayName, description});
     } catch (error) {
       response.status(400).send(error);
@@ -51,7 +53,7 @@ export class LayersController implements IController {
     const {layerId} = request.body;
     try {
       await this.DBconnector.delete({layerId});
-      response.status(200).send(layerId);
+      response.status(200).send({layerId});
     } catch (error) {
       response.status(400).send(error);
     }
@@ -73,7 +75,7 @@ export class LayersController implements IController {
     const {layerId} = request.body;
     try {
       await this.DBconnector.get({layerId});
-      response.status(200).send(layerId);
+      response.status(200).send({layerId});
     } catch (error) {
       response.status(400).send(error);
     }

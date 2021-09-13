@@ -10,8 +10,8 @@ class Card extends React.Component {
   }
   render() {
       return (
-        <div className="card" onClick={() => this.toggleCard()}>
-            { this.props.card.isShown ?
+        <div disabled={this.state.card.disabled} className="card" onClick={() => this.toggleCard()}>
+            { this.state.card.isShown ?
             <div className="front-card">
               <span className="title">{this.state.card.title}</span>
               <div className="details">{this.state.card.details}</div>
@@ -26,7 +26,7 @@ class Card extends React.Component {
     this.props.setGameState(this.state.card);
     const card = this.state.card;
     this.checkIfPossibleToRevealCard(card)
-    card.isShown = !card.isShown;
+    // card.isShown = !card.isShown;
     this.setState({card})
   }
 

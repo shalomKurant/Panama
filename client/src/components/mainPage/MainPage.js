@@ -5,6 +5,7 @@ import DeleteLayer from "../deleteLayer/DeleteLayer.component";
 import Header from "../header/Header.component";
 import "./MainPage.style.scss";
 import BaseGameBoard from "../../memoryGame/components/baseGameBoard/BaseGameBoard.component";
+import BottomBar from "../bottomBar/BottomBar.component";
 
 class MainPage extends React.Component {
 
@@ -47,14 +48,15 @@ class MainPage extends React.Component {
                     }
                 </div>
                 : <BaseGameBoard></BaseGameBoard>}
+                <BottomBar/>
             </div>
         ) 
     }
 
     getListOptions() {
         return [
-            {name: "addLayer1", title: "add", icon: {}, component: <AddLayer onOptionClicked={this.onOptionClicked}/>, subTitle: "Click here"},
-            {name: "addLayer2", title: "delete ", icon: {}, component: <DeleteLayer onOptionClicked={this.onOptionClicked}/>, class: ""}
+            {name: "addLayer", title: "הוספת תיאור לשכבה", icon: {}, component: <AddLayer onOptionClicked={this.onOptionClicked}/>, subTitle: "Click here"},
+            {name: "deleteLayer", title: "מחיקת שכבה קיימת ", icon: {}, component: <DeleteLayer onOptionClicked={this.onOptionClicked}/>, class: ""}
 
         ];
     } 

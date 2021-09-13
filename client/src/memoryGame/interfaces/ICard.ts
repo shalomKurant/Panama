@@ -3,5 +3,6 @@ export interface ICard {
     linkingId: string;
     title: string;
     details: string;
-    isShown: string;
+    isShown: boolean;
+    disabled: boolean;
 }

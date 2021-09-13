@@ -1,0 +1,26 @@
+#bottom-bar-container {
+    width: 100%;
+    height: 55px;
+    background-color: black;
+    bottom: 0px;
+    position: sticky;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .gif {
+        height: 50px;
+        margin-right: 10px;
+        margin-left: 10px;
+
+        &.richardgif {
+            width: 50px;
+        }
+        &.jaredgif {
+            width: 90px;
+        }
+    }
+
+}

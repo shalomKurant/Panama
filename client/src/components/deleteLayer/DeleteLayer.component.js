@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { layersDataProvider } from "../../services/LayersDataProvider.servics";
 import { httpManager } from '../../services/HttpManager';
+import { FormatString } from '../../services/FormatString';
 
 class DeleteLayer extends React.Component {
     constructor(props) {
@@ -23,28 +24,29 @@ class DeleteLayer extends React.Component {
 
     render() {
         return (
-            <div id="delete-layer" onClick={() => this.props.onOptionClicked(constants.optionNames.DeleteLayer)}>
-
-            <AccordionActions>
-            <Autocomplete
-                id="combo-box-demo"
-                options={this.state.layers}
-                onChange={(event, value) => this.setState({ selectedLayer: value })}
-                getOptionLabel={(option) => option.displayName}
-                style={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Select layer" variant="outlined" />}
-                />
-            </AccordionActions>
+            <div id="delete-layer">
+            <div className="list-content" onClick={() => this.props.onOptionClicked(constants.optionNames.DeleteLayer)}>
+                <Autocomplete
+                    id="combo-box-demo"
+                    options={this.state.layers}
+                    onChange={(event, value) => this.setState({ selectedLayer: value })}
+                    getOptionLabel={(option) => option.displayName}
+                    size="small"
+                    renderInput={(params) => <TextField {...params} label="רשימת שכבות" variant="outlined" />}
+                    />
+            </div>
             {this.state.selectedLayer ?
                 <div id="selected-description">
-                    <span className="title">Layer to delete</span>
+                    <span className="title">שכבה נבחרה למחיקה: </span>
+                    &nbsp;
                     <span className="name">{this.state.selectedLayer.displayName}</span>
+                    &nbsp;
+                    <br/>
                     <span className="description">{this.state.selectedLayer.description}</span>
                 </div>
                 : ""
-            }
-                            
-            <Button onClick={() => this.deleteLayerDescription(this.state.selectedLayer)}>Delete</Button>
+            }          
+            <Button disabled={!this.state.selectedLayer} className="action-buttons" onClick={() => this.deleteLayerDescription(this.state.selectedLayer)}>מחיקה</Button>
             </div>
         ) 
     }
@@ -55,11 +57,3 @@ class DeleteLayer extends React.Component {
     }
 }
 export default DeleteLayer;
-
-
-export const FormatString = (string, ...args) => {
-    for (let i = 0; i < args.length; i++) {
-        string.replace(`${i}`, args[i]);
-    }
-    return string;
-}

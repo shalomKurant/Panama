@@ -45,7 +45,7 @@ class DataBaseConnector implements IDataBaseConnector {
     }
 
     public async update(findQuery: any, newValue: any): Promise<void> {
-      await this.collection.updateOne(findQuery, newValue);
+      await this.collection.updateOne(findQuery, newValue, { upsert: true });
     }
 
     public close() {

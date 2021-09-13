@@ -2,7 +2,7 @@
 import * as React from "react";
 import { siteState, siteTypes } from "../..";
 import "./Header.style.scss";
-
+import logo from "../../images/Piedpiperoldlogo.jpg"
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ class Header extends React.Component {
     render() {
         return (
             <div id="header-container">
-                <span id="title" onClick={() => {this.props.changeState()}}>desciption</span> 
+                <img className="logo" src={logo} onClick={() => {this.props.changeState()}}/>
             </div>
         ) 
     }

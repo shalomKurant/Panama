@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { constants } from "../../constants/constants";
-import "./AddLayer.style.css";
+import "./AddLayer.style.scss";
 import Button from '@material-ui/core/Button';
 import AccordionActions from '@material-ui/core/AccordionActions';
 import TextField from '@material-ui/core/TextField';
@@ -14,8 +14,8 @@ class AddLayer extends React.Component {
         super(props);
         this.state = {
             layers: {},
-            selectedLayer: {},
-            inputDescriptionValue: "Description here"
+            selectedLayer: null,
+            inputDescriptionValue: null
         }
 
         layersDataProvider.getAllLayers().then(result => {
@@ -33,30 +33,30 @@ class AddLayer extends React.Component {
     render() {
         return (
             <div id="add-layer">
-
-                <div onClick={() => this.props.onOptionClicked(constants.optionNames.AddLayer)}>
-
-                <AccordionActions>
+                <div className="list-content" onClick={() => this.props.onOptionClicked(constants.optionNames.AddLayer)}>
                 <Autocomplete
+                    className="autocomplete"
                     id="combo-box-demo"
                     options={this.state.layers}
                     onChange={(event, value) => this.setState({ selectedLayer: value })}
                     getOptionLabel={(option) => option.displayName}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                    size="small"
+                    renderInput={(params) => <TextField {...params} label="רשימת שכבות" variant="outlined" />}
                     />
-                </AccordionActions>
-                <Button onClick={() => this.sendLayerDescription()}>Cancel</Button>
-                    <Button onClick={() => console.log(this.state.selectedLayer + "" + this.state.inputDescriptionValue)}>Send</Button>
+                    <Button disabled={!this.state.inputDescriptionValue || !this.state.selectedLayer} className="action-buttons" onClick={() => this.sendLayerDescription()}>הוספה</Button>
                 </div>
-                <textarea value={this.state.inputDescriptionValue} onChange={this.handleChange}></textarea>          
-
+                <textarea className="description-text-area" value={this.state.inputDescriptionValue} placeholder="תיאור שכבה" onChange={this.handleChange}></textarea>          
             </div>
         ) 
     }
 
     sendLayerDescription() {
-        httpManager.post(constants.routes.layers.addDescription, {BODY: "--------------"}).then(r => {})
+        httpManager.post(constants.routes.layers.addDescription, 
+            {   
+                id: this.state.selectedLayer.id,
+                description: this.state.selectedLayer.description,
+                displayName: this.state.selectedLayer.displayName
+            }).then(r => {})
     }
 }
 export default AddLayer;

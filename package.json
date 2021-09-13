@@ -6,7 +6,7 @@
     "start": "node_modules/.bin/tsc && node dist/server.js",
     "build": "node_modules/.bin/tsc",
     "client": "cd client && yarn start",
-    "server": "nodemon server.js",
+    "server": "nodemon server.ts",
     "start_dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "install_all": "yarn install_client && yarn install_server",
     "install_client": "cd client && yarn install",

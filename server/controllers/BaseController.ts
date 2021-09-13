@@ -29,8 +29,11 @@ export default class BaseController {
   }
  
   private initBasePage(): void {
-    this.app.get("*", (request: express.Request, response: express.Response) => {
+    this.app.get("/", (request: express.Request, response: express.Response) => {
       response.sendFile(path.join(__dirname, '../../../client/build', 'index.html'));
+    });
+    this.app.get("/isAlive", (request: express.Request, response: express.Response) => {      
+      response.status(200).json('Hi, Im OK, How are you?');
     })
   }
   public listen() {
