@@ -23,6 +23,8 @@ class Card extends React.Component {
 
 
   toggleCard() {
+    if (this.state.card.disabled) return;
+    
     this.props.setGameState(this.state.card);
     const card = this.state.card;
     this.checkIfPossibleToRevealCard(card)

@@ -1,13 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { constants } from "../../constants/constants";
 import "./AddLayer.style.scss";
 import Button from '@material-ui/core/Button';
-import AccordionActions from '@material-ui/core/AccordionActions';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { layersDataProvider } from "../../services/LayersDataProvider.servics";
 import { httpManager } from '../../services/HttpManager';
-import { Input } from '@material-ui/core';
 
 class AddLayer extends React.Component {
     constructor(props) {

@@ -1,7 +1,8 @@
 import { ICard } from "../interfaces/ICard";
 import { IPlayer } from "../interfaces/IPlayer";
+import { eventBuilder } from "./eventsManager/EventBuilder";
 
-export class GameManager {
+class GameManager {
     private cards: ICard[] = [
         {
           id: Math.random() + "",
@@ -44,6 +45,10 @@ export class GameManager {
         return this.cards;
     }
 
+    public getPlayers(): IPlayer[] {
+      return Array.from(this.players.values());
+    }
+
     public getRevealCards(): ICard[] {
         return this.cards.filter(card => card.isShown);
     }
@@ -51,7 +56,13 @@ export class GameManager {
     public setPalyer(palyerName: string): void {
         const layerId: string = palyerName;
         this.players.set(layerId, this.setPlayerProperties(layerId, palyerName));
+        this.refreshPlayersEvetn();
     }
+
+    public removePalyer(palyerName: string): void {
+      const layerId: string = palyerName;
+      this.players.delete(layerId);
+  }
 
     public getPalyerByName(name: string): IPlayer {
         return this.players.get(name)!;
@@ -74,4 +85,10 @@ export class GameManager {
             score: 0
         }
     }
+
+    private refreshPlayersEvetn() {
+      eventBuilder.dispatch("playerAdded", { players: this.getPlayers() });
+    };
 }
+const gameManager: GameManager = new GameManager();
+export { gameManager };
