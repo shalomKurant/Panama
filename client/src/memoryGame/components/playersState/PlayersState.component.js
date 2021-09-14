@@ -4,6 +4,9 @@ import {gameManager} from "../../services/GameManager.service";
 import PlayerState from "./playerState/PlayerState.component";
 import { eventBuilder } from "../../services/eventsManager/EventBuilder";
 import { Events } from "../../services/eventsManager/Events";
+import { Button } from "@material-ui/core";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 class PlayersState extends React.Component {
   constructor(props) {
@@ -17,6 +20,12 @@ class PlayersState extends React.Component {
   render() {
       return (
         <div id="players-state">
+          { this.state.players.length > 0 && gameManager.isGameOn() ? 
+            <div className="navigation-buttons">
+              <Button className="exit-game-button" onClick={() => this.exit()}><span>יציאה</span><ExitToAppIcon/></Button>
+              <Button className="refresh-board-button" onClick={() => gameManager.refreshCardsEvetn()}><span>לוח חדש</span><RefreshIcon/></Button>
+            </div>
+          : <></>}
           {
             this.state.players.map(player => {
               return (
@@ -29,6 +38,10 @@ class PlayersState extends React.Component {
     );
   }
 
+  init() {
+    this.setState({players: gameManager.getPlayers()});
+  }
+
   componentDidMount() {
     eventBuilder.on(Events.playerAdded, (data) =>
       this.setState({ players: data.players })
@@ -39,9 +52,8 @@ class PlayersState extends React.Component {
     eventBuilder.remove(Events.playerAdded);
   }
 
-  init() {
-    this.componentDidMount();
-    this.setState({players: gameManager.getPlayers()});
+  exit() {
+    this.props.resetGame();
   }
 }
 export default PlayersState;

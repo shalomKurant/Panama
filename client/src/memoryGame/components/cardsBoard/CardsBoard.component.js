@@ -2,10 +2,12 @@ import "./CardsBoard.style.scss";
 import * as React from "react";
 import Card from "./card/Card.component";
 import {gameManager} from "../../services/GameManager.service";
+import { Events } from "../../services/eventsManager/Events";
+import { eventBuilder } from "../../services/eventsManager/EventBuilder";
 
 class CardsBoard extends React.Component {
 
-  timeOutToHideDisplayedCards = 2000;
+  TIMEOUT_TO_HIDE_DISPLAYED_CARDS = 2000;
   constructor(props) {
     super(props);
     
@@ -26,7 +28,6 @@ class CardsBoard extends React.Component {
               ) 
             })
           }
-          <span>Cards Board</span>
         </div>
     );
   }
@@ -39,10 +40,21 @@ class CardsBoard extends React.Component {
     this.state.cards = gameManager.getCards()
   }
 
+  // forceUpdateHandler(){
+  //   this.forceUpdate();
+  // };
+
+  componentDidMount() {
+    eventBuilder.on(Events.refreshCards, (data) =>
+      this.setState({ cards: data.cards })
+    );
+  }
+
+  componentWillUnmount() {
+    eventBuilder.remove(Events.refreshCards);
+  }
+
   getGameState() {
-    const revealCards = this.getRevealCard();
-    const getGameerId = "this"
-    return revealCards;
   }
 
   setGameState(card) {
@@ -62,12 +74,19 @@ class CardsBoard extends React.Component {
       if (isWinCard.length === 2) {
         this.toggleDisableCards(this.state.cards, false);
         this.setState({cards: this.state.cards.filter(card => !card.isShown)});
+        const activePlayer = gameManager.getActivePlayer();
+        gameManager.addPlayerCardWin(activePlayer.name);
+        if (this.state.cards.length === 0) {
+          gameManager.addPlayerTotalScore(activePlayer.name);
+        }
       } else {
         setTimeout(() => {
           shownCards.forEach(c => c.isShown = false);
           this.toggleDisableCards(this.state.cards, false);
-          this.setState({cards: this.state.cards})
-        }, this.timeOutToHideDisplayedCards)
+          this.setState({cards: this.state.cards});
+          const nextPlayer = gameManager.getNextPlayerTurn();
+          gameManager.setPlayerTurn(nextPlayer.name);
+        }, this.TIMEOUT_TO_HIDE_DISPLAYED_CARDS);
       }
     }
   }

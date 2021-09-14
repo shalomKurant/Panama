@@ -41,9 +41,18 @@ class AddLayer extends React.Component {
                     size="small"
                     renderInput={(params) => <TextField {...params} label="רשימת שכבות" variant="outlined" />}
                     />
-                    <Button disabled={!this.state.inputDescriptionValue || !this.state.selectedLayer} className="action-buttons" onClick={() => this.sendLayerDescription()}>הוספה</Button>
+                    <Button 
+                        disabled={!this.state.inputDescriptionValue || !this.state.selectedLayer} 
+                        className="action-buttons" 
+                        onClick={() => this.sendLayerDescription()}>הוספה</Button>
                 </div>
-                <textarea className="description-text-area" value={this.state.inputDescriptionValue} placeholder="תיאור שכבה" onChange={this.handleChange}></textarea>          
+                <textarea 
+                    disabled={!this.state.selectedLayer} 
+                    className="description-text-area" 
+                    value={this.state.inputDescriptionValue} 
+                    placeholder="תיאור שכבה" 
+                    onChange={this.handleChange}>
+                </textarea>          
             </div>
         ) 
     }

@@ -1,3 +1,4 @@
 export enum Events {
-    playerAdded = "playerAdded"
+    playerAdded = "playerAdded",
+    refreshCards = "refreshCards"
 }

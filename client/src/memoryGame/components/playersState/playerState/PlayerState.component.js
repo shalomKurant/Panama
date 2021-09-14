@@ -12,12 +12,10 @@ class PlayerState extends React.Component {
 
   render() {
       return (
-        <div className="player-state">
-          <span>{this.props.player.name}</span>
-          <span>{this.props.player.cardWins}</span>
-          <span>{this.props.player.isActive}</span>
-          <span>{this.props.player.score}</span>
-          <span>{this.props.player.id}</span>
+        <div className={`player-state ${+ this.props.player.isActive ? " active" : ""}`}>
+          <span className="player-name">{this.props.player.name}</span>
+          <span className="player-cardWins"><span>מספר כרטיסים</span>&nbsp;{this.props.player.cardWins}</span>
+          <span className="player-score"><span>מספר נצחונות כולל</span>&nbsp;{this.props.player.score}</span>
         </div>
     );
   }

@@ -2,4 +2,75 @@
     display: flex;
     width: 100%;
     height: 150px;
+    flex-direction: column;
+    overflow: auto;
+    .players-list {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        flex-wrap: wrap;
+        align-content: space-around;
+        .player-item {
+            flex-direction: row;
+            display: flex;
+            justify-content: center;
+            width: 300px;
+            margin: 2px;
+            background-color: #00000036;
+            padding: 2px;
+            border-radius: 6px;
+            .name {
+                width: 100%;
+            }
+            .delete-icon {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .add-player-options {
+        display: flex;
+        align-content: space-around;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+
+        .MuiFormControl-root.MuiTextField-root {
+            margin: 10px;
+            background-color: #c6cacd;
+            border-radius: 5px;
+            height: 40px;
+            label {
+                margin-left: 5px;
+                margin-top: -3px;
+            }
+            label + .MuiInput-formControl {
+                margin-top: 11px;
+            }
+            #standard-basic-helper-text {
+                color: red;
+            }
+        }
+        .add-player-button, .start-game-button {
+            background-color: #86beff;
+            margin-top: 10px;
+            margin-left: 10px;
+            width: 110px;
+            height: 40px;
+            font-size: 16px;
+            &.start-game-button {
+                background-color: #86ff90;
+                span {
+                    line-height: 16px;
+                }
+            }
+        }
+        .reset-game-button {
+            background-color: #ff7f7fb8;
+            margin-top: 10px;
+            height: 40px;
+            max-width: 40px !important;
+            font-size: 10px;
+        }
+    }
 }

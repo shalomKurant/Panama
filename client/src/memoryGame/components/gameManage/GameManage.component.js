@@ -4,6 +4,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import {gameManager} from "../../services/GameManager.service";
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class GameManage extends React.Component {
 
@@ -25,9 +28,9 @@ class GameManage extends React.Component {
           <div className="players-list">
             {this.state.players.map(player => {
               return (
-                <div>
-                  <div key={player.name}>{player.name}</div>
-                  <DeleteOutlineIcon onClick={this.removePalyer.bind(this, player.name)}/>
+                <div className="player-item">
+                  <div className="name" key={player.name}>{player.name}</div>
+                  <DeleteOutlineIcon className="delete-icon" onClick={this.removePalyer.bind(this, player.name)}/>
                 </div>
               )
             })}
@@ -35,12 +38,18 @@ class GameManage extends React.Component {
           <div className="add-player-options">
           <TextField 
             id="standard-basic" 
-            label="הוספת שם שחקן"
+            label="הזן שם"
             helperText= {this.state.errorInput}
             onChange={this.onChange.bind(this)}
             value={this.state.playerToAdd}
+            size="small"
+            autoFocus
           />
-          <Button className="action-buttons" disabled={false} onClick={() => this.addPlayer()}>הוספת שחקן</Button>
+          <Button className="add-player-button" disabled={false} onClick={() => this.addPlayer()}>הוספת שחקן</Button>
+          <Button className="start-game-button" disabled={this.state.players.length <= 0} onClick={() => this.startGame()}><span>התחל משחק</span><PlayCircleOutlineIcon/></Button>
+          <Tooltip title="מחיקת נתונים" arrow>
+            <Button className="reset-game-button" onClick={() => this.resetGame()}><RotateLeftIcon/></Button>
+          </Tooltip>
           </div>
         </div>
     );
@@ -61,6 +70,18 @@ class GameManage extends React.Component {
   removePalyer(playerName) {
     gameManager.removePalyer(playerName);
     this.getPlayers();
+  }
+
+  startGame() {
+    gameManager.setGameActivate(true);
+    this.props.startGame();
+    gameManager.setPlayerTurn();
+  }
+
+  resetGame() {
+    this.setState({players: []});
+    this.setState({playerToAdd: ""})
+    gameManager.resetGame();
   }
 
   getPlayers() {

@@ -65,8 +65,10 @@ class BaseContentOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          componentDispalyed: true
+          componentDispalyed: false
         }
+
+        this.init();
     }
     render() {
        return (
@@ -85,6 +87,12 @@ class BaseContentOptions extends React.Component {
                </div>
            </div>
        ) 
+    }
+
+    init() {
+      if (this.props.name === "addLayer") {
+        this.state.componentDispalyed = true;
+      }
     }
 
     toggleComonentContent() {
