@@ -47,8 +47,11 @@
             label + .MuiInput-formControl {
                 margin-top: 11px;
             }
-            #standard-basic-helper-text {
+            #standard-basic-helper-text, #standard-number-helper-text {
                 color: red;
+            }
+            &.number-cards-input {
+                width: 100px;
             }
         }
         .add-player-button, .start-game-button {

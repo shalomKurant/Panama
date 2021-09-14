@@ -75,8 +75,9 @@ class BaseContentOptions extends React.Component {
            <div className="basic-box-option">
 
                <div className="box-header" onClick={() => this.toggleComonentContent()}>
-                   <span className="title">{this.props.header}</span>
-                   <div className="toggle-icon">
+                  <span className="icon">{this.props.icon}</span>
+                  <span className="title">{this.props.header}</span>
+                  <div className="toggle-icon">
                     {
                       this.state.componentDispalyed ?  <ChevronLeftIcon/> : <ChevronRightIcon/>
                     }

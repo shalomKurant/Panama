@@ -13,7 +13,6 @@ class CardsBoard extends React.Component {
     
     this.state = {cards: []}
 
-    this.getGameState = this.getGameState.bind(this);
     this.setGameState = this.setGameState.bind(this);
     this.initialization();
   }
@@ -24,7 +23,7 @@ class CardsBoard extends React.Component {
           {
             this.state.cards.map(card => {
               return (
-                  <Card key={card.id} card={card} getGameState={this.getGameState} setGameState={this.setGameState}></Card>
+                  <Card key={Math.random() + ""} card={card} setGameState={this.setGameState}></Card>
               ) 
             })
           }
@@ -40,10 +39,6 @@ class CardsBoard extends React.Component {
     this.state.cards = gameManager.getCards()
   }
 
-  // forceUpdateHandler(){
-  //   this.forceUpdate();
-  // };
-
   componentDidMount() {
     eventBuilder.on(Events.refreshCards, (data) =>
       this.setState({ cards: data.cards })
@@ -52,9 +47,6 @@ class CardsBoard extends React.Component {
 
   componentWillUnmount() {
     eventBuilder.remove(Events.refreshCards);
-  }
-
-  getGameState() {
   }
 
   setGameState(card) {
@@ -76,7 +68,7 @@ class CardsBoard extends React.Component {
         this.setState({cards: this.state.cards.filter(card => !card.isShown)});
         const activePlayer = gameManager.getActivePlayer();
         gameManager.addPlayerCardWin(activePlayer.name);
-        if (this.state.cards.length === 0) {
+        if (this.state.cards.length === 2) {
           gameManager.addPlayerTotalScore(activePlayer.name);
         }
       } else {

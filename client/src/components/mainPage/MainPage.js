@@ -6,21 +6,30 @@ import Header from "../header/Header.component";
 import "./MainPage.style.scss";
 import BaseGameBoard from "../../memoryGame/components/baseGameBoard/BaseGameBoard.component";
 import BottomBar from "../bottomBar/BottomBar.component";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class MainPage extends React.Component {
+    CLICKED_AMOUNT_TO_GAME_STATE = 5;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            siteStateRegular: true
+            siteStateRegular: true,
+            clickedCounter: 0
         }
         this.changeState = this.changeState.bind(this);
 
     }
 
     changeState() {
-        this.setStateSite();
+        if (this.state.clickedCounter < this.CLICKED_AMOUNT_TO_GAME_STATE && this.state.siteStateRegular) {
+            this.setState({clickedCounter: this.state.clickedCounter + 1});
+        } else {
+            this.setStateSite();
+            this.setState({clickedCounter: 0});
+        }        
     }
 
     setStateSite() {
@@ -55,8 +64,8 @@ class MainPage extends React.Component {
 
     getListOptions() {
         return [
-            {name: "addLayer", title: "הוספת תיאור לשכבה", icon: {}, component: <AddLayer onOptionClicked={this.onOptionClicked}/>, subTitle: "Click here"},
-            {name: "deleteLayer", title: "מחיקת שכבה קיימת ", icon: {}, component: <DeleteLayer onOptionClicked={this.onOptionClicked}/>, class: ""}
+            {name: "addLayer", title: "הוספת תיאור לשכבה", icon: <AddCircleOutlineIcon/>, component: <AddLayer onOptionClicked={this.onOptionClicked}/>, subTitle: ""},
+            {name: "deleteLayer", title: "מחיקת שכבה קיימת ", icon: <DeleteIcon/>, component: <DeleteLayer onOptionClicked={this.onOptionClicked}/>}
 
         ];
     } 

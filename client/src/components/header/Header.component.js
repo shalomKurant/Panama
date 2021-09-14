@@ -18,6 +18,10 @@ class Header extends React.Component {
             </div>
         ) 
     }
+
+    headerClicked() {
+
+    }
 }
 
 export default Header;

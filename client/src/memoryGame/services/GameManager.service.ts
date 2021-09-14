@@ -1,60 +1,12 @@
 import _, { values } from "lodash";
 import { ICard } from "../interfaces/ICard";
 import { IPlayer } from "../interfaces/IPlayer";
+import { CardsGenerator } from "./CardsGenerator.service";
 import { eventBuilder } from "./eventsManager/EventBuilder";
 import { Events } from "./eventsManager/Events";
 
 class GameManager {
-    private cards: ICard[] = [
-        {
-          id: Math.random() + "",
-          linkingId: "linkingId1",
-          title: "title1",
-          details: "details1",
-          isShown: false,
-          disabled: false
-        },
-        {
-          id: Math.random() + "",
-          linkingId: "linkingId1",
-          title: "title1",
-          details: "details1",
-          isShown: false,
-          disabled: false
-        },
-        {
-          id: Math.random() + "",
-          linkingId: "linkingId2",
-          title: "title2",
-          details: "details2",
-          isShown: false,
-          disabled: false
-        },
-        {
-          id: Math.random() + "",
-          linkingId: "linkingId2",
-          title: "title2",
-          details: "details2",
-          isShown: false,
-          disabled: false
-        },
-        {
-          id: Math.random() + "",
-          linkingId: "linkingId3",
-          title: "title3",
-          details: "details3",
-          isShown: false,
-          disabled: false
-        },
-        {
-          id: Math.random() + "",
-          linkingId: "linkingId3",
-          title: "title3",
-          details: "details3",
-          isShown: false,
-          disabled: false
-        }
-      ];
+    private cards: ICard[] = [];
     private players: _.Dictionary<IPlayer> = {};
     private isGameActive: boolean = false;
 
@@ -68,6 +20,10 @@ class GameManager {
 
     public getCards(): ICard[] {
         return JSON.parse(JSON.stringify(this.cards));
+    }
+
+    private setCards(cardsAmount?: number) {
+      this.cards = CardsGenerator.generate(cardsAmount);
     }
 
     public getPlayers(): IPlayer[] {
@@ -111,8 +67,9 @@ class GameManager {
       return this.isGameActive;
     }
 
-    public setGameActivate(isGameOn: boolean): void {
+    public startGame(isGameOn: boolean, cardsAmount?: number): void {
       this.isGameActive = isGameOn;
+      this.setCards(cardsAmount);
     }
 
     public addPlayerCardWin(playerName: string) {

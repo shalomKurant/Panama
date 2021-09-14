@@ -35,8 +35,6 @@ class Card extends React.Component {
   checkIfPossibleToRevealCard(card) {
     if (card.isShown) 
       return true;
-
-      const gameState = this.props.getGameState();
   }
 }
 export default Card;

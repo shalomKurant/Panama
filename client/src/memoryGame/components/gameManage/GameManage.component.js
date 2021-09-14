@@ -7,16 +7,18 @@ import {gameManager} from "../../services/GameManager.service";
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Constants } from "../../services/Constants";
+import GeneralDialog from "../dialog/dialog.component";
 
 class GameManage extends React.Component {
-
-  MAX_PALYERS_IN_GAME = 5;
   constructor(props) {
     super(props);
       this.state = { 
         players: [],
         errorInput: null,
-        playerToAdd: ""
+        errorNumberInput: null,
+        playerToAdd: "",
+        cardsAmount: 0
       }
 
     this.init()
@@ -45,12 +47,25 @@ class GameManage extends React.Component {
             size="small"
             autoFocus
           />
+          <TextField
+            className="number-cards-input"
+            id="standard-number"
+            label="מספר כרטיסים"
+            type="number"
+            size="small"
+            onChange={this.checkCardsAmountInput.bind(this)}
+            helperText= {this.state.errorNumberInput}
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
           <Button className="add-player-button" disabled={false} onClick={() => this.addPlayer()}>הוספת שחקן</Button>
           <Button className="start-game-button" disabled={this.state.players.length <= 0} onClick={() => this.startGame()}><span>התחל משחק</span><PlayCircleOutlineIcon/></Button>
           <Tooltip title="מחיקת נתונים" arrow>
             <Button className="reset-game-button" onClick={() => this.resetGame()}><RotateLeftIcon/></Button>
           </Tooltip>
           </div>
+          <GeneralDialog button={<div>BUTTON</div>} title={"TITLE"} description={"description"} onClose={() => {}}></GeneralDialog>
         </div>
     );
   }
@@ -73,7 +88,7 @@ class GameManage extends React.Component {
   }
 
   startGame() {
-    gameManager.setGameActivate(true);
+    gameManager.startGame(true, this.state.cardsAmount);
     this.props.startGame();
     gameManager.setPlayerTurn();
   }
@@ -92,8 +107,8 @@ class GameManage extends React.Component {
     this.setState({playerToAdd: event.target.value})
     if (this.state.players.some(player => player.name === event.target.value)) {
       this.setState({ errorInput: 'שם קיים במשחק'});
-    } else if (this.state.players.length >= this.MAX_PALYERS_IN_GAME) {
-      this.setState({ errorInput: `${this.MAX_PALYERS_IN_GAME} מקסימום שחקנים`});
+    } else if (this.state.players.length >= Constants.maxPlayersInGame) {
+      this.setState({ errorInput: `${Constants.maxPlayersInGame} מקסימום שחקנים`});
     } else {
       this.setState({ errorInput: null});
     }
@@ -102,7 +117,17 @@ class GameManage extends React.Component {
   notAllowdToAddPlayer() {
     return this.state.errorInput !== null || 
       !this.state.playerToAdd || 
-      this.state.players.length >= this.MAX_PALYERS_IN_GAME;
+      this.state.players.length >= Constants.maxPlayersInGame;
+  }
+
+  checkCardsAmountInput(event) {
+    if (event.target.value <= Constants.maxCardsInGame) {
+      this.setState({ errorNumberInput: null});
+    } else {
+      event.target.value = Constants.maxCardsInGame;
+      this.setState({ errorNumberInput: `מקסימום ${Constants.maxCardsInGame} קלפים`});
+    }
+    this.setState({ cardsAmount: event.target.value});
   }
 }
 export default GameManage;
